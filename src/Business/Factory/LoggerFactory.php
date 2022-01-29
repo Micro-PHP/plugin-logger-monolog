@@ -24,11 +24,14 @@ class LoggerFactory implements LoggerFactoryInterface
     public function create(string $loggerName): LoggerInterface
     {
         $logger = new Logger($loggerName);
-        $handlerCollection = $this->handlerResolverFactory
+        $handlerCollectionGenerator = $this->handlerResolverFactory
             ->create($loggerName)
             ->resolve();
 
-        $logger->setHandlers(iterator_to_array($handlerCollection));
+
+        $handlerCollection = iterator_to_array($handlerCollectionGenerator);
+
+        $logger->setHandlers($handlerCollection);
 
         return $logger;
     }

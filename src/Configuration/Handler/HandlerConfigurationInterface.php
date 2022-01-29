@@ -15,11 +15,6 @@ interface HandlerConfigurationInterface
     public static function type(): string;
 
     /**
-     * @return array<string, mixed>
-     */
-    public function getHandlerConstructorArguments(): array;
-
-    /**
      * @return string
      */
     public function getHandlerClassName(): string;

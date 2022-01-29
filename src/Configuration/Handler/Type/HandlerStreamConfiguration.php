@@ -2,8 +2,8 @@
 
 namespace Micro\Plugin\Logger\Monolog\Configuration\Handler\Type;
 
+use Micro\Plugin\Logger\Monolog\Business\Handler\Type\Stream\StreamHandler;
 use Micro\Plugin\Logger\Monolog\Configuration\Handler\HandlerConfiguration;
-use Monolog\Handler\StreamHandler;
 
 class HandlerStreamConfiguration extends HandlerConfiguration implements HandlerStreamConfigurationInterface
 {
@@ -75,20 +75,6 @@ class HandlerStreamConfiguration extends HandlerConfiguration implements Handler
     public static function type(): string
     {
         return 'stream';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getHandlerConstructorArguments(): array
-    {
-        return [
-            $this->getLogFile(),
-            $this->getLevel(),
-            true,
-            null,
-            $this->useLocking(),
-        ];
     }
 
     /**
