@@ -2,6 +2,7 @@
 
 namespace Micro\Plugin\Logger\Monolog;
 
+use Micro\Component\DependencyInjection\Container;
 use Micro\Plugin\Logger\Business\Factory\LoggerFactoryInterface;
 use Micro\Plugin\Logger\LoggerPlugin;
 use Micro\Plugin\Logger\Monolog\Business\Factory\LoggerFactory;
@@ -13,12 +14,30 @@ use Micro\Plugin\Logger\Monolog\Business\Handler\HandlerResolverFactory;
 use Micro\Plugin\Logger\Monolog\Business\Handler\HandlerResolverFactoryInterface;
 use Micro\Plugin\Logger\Monolog\Configuration\Handler\HandlerConfigurationFactory;
 use Micro\Plugin\Logger\Monolog\Configuration\Handler\HandlerConfigurationFactoryInterface;
+use Micro\Plugin\Logger\Monolog\Configuration\Handler\Type\HandlerAmqpConfiguration;
 use Micro\Plugin\Logger\Monolog\Configuration\Handler\Type\HandlerStreamConfiguration;
-use Micro\Plugin\Logger\Monolog\Configuration\Handler\Type\HandlerStreamConfigurationInterface;
 
 class MonologPlugin extends LoggerPlugin
 {
+    /**
+     * @var HandlerProviderInterface|null
+     */
     private ?HandlerProviderInterface $handlerProvider = null;
+
+    /**
+     * @var Container
+     */
+    private Container $container;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function provideDependencies(Container $container): void
+    {
+        $this->container = $container;
+
+        parent::provideDependencies($container);
+    }
 
     /**
      * {@inheritDoc}
@@ -48,6 +67,7 @@ class MonologPlugin extends LoggerPlugin
     protected function createHandlerFactory(): HandlerFactoryInterface
     {
         return new HandlerFactory(
+            $this->container,
             $this->createHandlerConfigurationFactory()
         );
     }
@@ -78,7 +98,8 @@ class MonologPlugin extends LoggerPlugin
     protected function getHandlerConfigurationClassCollection(): iterable
     {
         return [
-            HandlerStreamConfiguration::class
+            HandlerStreamConfiguration::class,
+            HandlerAmqpConfiguration::class
         ];
     }
 }
