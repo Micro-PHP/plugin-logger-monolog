@@ -25,12 +25,9 @@ class HandlerResolver implements HandlerResolverInterface
     public function resolve(): iterable
     {
         $loggerConfiguration = $this->pluginConfiguration->getLoggerConfiguratrion($this->loggerName);
-        $handlersCollection = [];
 
         foreach ($loggerConfiguration->getHandlerList() as $handlerName) {
-            $handlersCollection[] = $this->handlerProvider->getHandler($handlerName);
+            yield $this->handlerProvider->getHandler($handlerName);
         }
-
-        return $handlersCollection;
     }
 }

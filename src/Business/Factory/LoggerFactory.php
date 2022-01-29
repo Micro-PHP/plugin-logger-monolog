@@ -28,7 +28,7 @@ class LoggerFactory implements LoggerFactoryInterface
             ->create($loggerName)
             ->resolve();
 
-        $logger->setHandlers($handlerCollection);
+        $logger->setHandlers(iterator_to_array($handlerCollection));
 
         return $logger;
     }

@@ -7,7 +7,7 @@ use Monolog\Handler\HandlerInterface;
 interface HandlerResolverInterface
 {
     /**
-     * @return HandlerInterface[]
+     * @return iterable<HandlerInterface>
      */
     public function resolve(): iterable;
 }
