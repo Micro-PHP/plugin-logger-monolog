@@ -23,4 +23,9 @@ interface HandlerConfigurationInterface
      * @return string
      */
     public function getHandlerClassName(): string;
+
+    /**
+     * @return string
+     */
+    public function getLevelAsString(): string;
 }

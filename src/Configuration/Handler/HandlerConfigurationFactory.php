@@ -29,7 +29,7 @@ class HandlerConfigurationFactory implements HandlerConfigurationFactoryInterfac
                 continue;
             }
 
-            $handlerClass =  new $handlerConfigurationClass($this->configuration, $handlerName);
+            $handlerClass =  new $handlerConfigurationClass($this->pluginConfiguration->applicationConfiguration(), $handlerName);
             if(!in_array(HandlerConfigurationInterface::class, class_implements($handlerClass), true)) {
                 $this->throwHandlerCreateException($handlerName, sprintf('Class "%s" should be implements "%s".',
                     $handlerClass, HandlerConfigurationInterface::class

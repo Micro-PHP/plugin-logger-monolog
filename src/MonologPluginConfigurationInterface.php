@@ -2,12 +2,15 @@
 
 namespace Micro\Plugin\Logger\Monolog;
 
+use Micro\Framework\Kernel\Configuration\ApplicationConfigurationInterface;
 use Micro\Plugin\Logger\LoggerPluginConfigurationInterface;
+use Micro\Plugin\Logger\Monolog\Configuration\Handler\Type\HandlerStreamConfigurationInterface;
 use Micro\Plugin\Logger\Monolog\Configuration\Logger\LoggerConfigurationInterface;
 
 interface MonologPluginConfigurationInterface extends LoggerPluginConfigurationInterface
 {
     public const HANDLER_DEFAULT = 'default';
+    public const HANDLER_DEFAULT_TYPE = HandlerStreamConfigurationInterface::TYPE;
     public const LOGGER_DEFAULT = 'default';
 
 
@@ -39,4 +42,9 @@ interface MonologPluginConfigurationInterface extends LoggerPluginConfigurationI
      * @return iterable<string>
      */
     public function getLoggerlist(): iterable;
+
+    /**
+     * @return ApplicationConfigurationInterface
+     */
+    public function applicationConfiguration(): ApplicationConfigurationInterface;
 }

@@ -16,8 +16,16 @@ abstract class HandlerConfiguration extends PluginRoutingKeyConfiguration implem
      */
     public function getLevel(): int
     {
-        $level = $this->get(self::CFG_LEVEL, self::LEVEL_DEFAULT);
+        $level = mb_strtoupper($this->getLevelAsString());
 
         return constant(Logger::class . "::$level");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLevelAsString(): string
+    {
+        return mb_strtolower($this->get(self::CFG_LEVEL, self::LEVEL_DEFAULT));
     }
 }

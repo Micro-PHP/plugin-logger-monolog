@@ -3,15 +3,18 @@
 namespace Micro\Plugin\Logger\Monolog\Business\Factory;
 
 use Micro\Plugin\Logger\Business\Factory\LoggerFactoryInterface;
-use Micro\Plugin\Logger\LoggerPluginConfiguration;
-use Monolog\Handler\AbstractProcessingHandler;
-use Monolog\Handler\StreamHandler;
+use Micro\Plugin\Logger\Monolog\Business\Handler\HandlerResolverFactoryInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
 class LoggerFactory implements LoggerFactoryInterface
 {
-    public function __construct(private LoggerPluginConfiguration $configuration)
+    /**
+     * @param HandlerResolverFactoryInterface $handlerResolverFactory
+     */
+    public function __construct(
+        private HandlerResolverFactoryInterface $handlerResolverFactory
+    )
     {
     }
 
@@ -20,21 +23,13 @@ class LoggerFactory implements LoggerFactoryInterface
      */
     public function create(string $loggerName): LoggerInterface
     {
-        $logger = new Logger($this->configuration->getLoggerDefaultName());
+        $logger = new Logger($loggerName);
+        $handlerCollection = $this->handlerResolverFactory
+            ->create($loggerName)
+            ->resolve();
 
-        $logger->pushHandler($this->createHandler());
+        $logger->setHandlers($handlerCollection);
 
         return $logger;
-    }
-
-    /**
-     * @return AbstractProcessingHandler
-     */
-    protected function createHandler(): AbstractProcessingHandler
-    {
-        return new StreamHandler(
-            $this->configuration->getLogFile(),
-            $this->configuration->getLogLevel()
-        );
     }
 }

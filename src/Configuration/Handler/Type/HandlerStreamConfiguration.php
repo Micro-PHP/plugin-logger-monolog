@@ -45,13 +45,13 @@ class HandlerStreamConfiguration extends HandlerConfiguration implements Handler
      */
     protected function getFilename(string $logFileConfigValue): string
     {
-        $adapterLevel = $this->getLevel();
+        $adapterLevel = $this->getLevelAsString();
 
-        return dirname($logFileConfigValue) .
+        return rtrim($logFileConfigValue, '/') .
             DIRECTORY_SEPARATOR .
             $this->configRoutingKey . '-' .
             $adapterLevel . '-' .
-            (new \DateTime('new'))->format('Y-n-d') .
+            (new \DateTime('now'))->format('Y-m-d') .
             '.log';
     }
 

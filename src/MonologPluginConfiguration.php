@@ -2,6 +2,7 @@
 
 namespace Micro\Plugin\Logger\Monolog;
 
+use Micro\Framework\Kernel\Configuration\ApplicationConfigurationInterface;
 use Micro\Plugin\Logger\LoggerPluginConfiguration;
 use Micro\Plugin\Logger\Monolog\Configuration\Logger\LoggerConfiguration;
 use Micro\Plugin\Logger\Monolog\Configuration\Logger\LoggerConfigurationInterface;
@@ -19,7 +20,7 @@ class MonologPluginConfiguration extends LoggerPluginConfiguration implements Mo
      */
     public function getHandlerType(string $handlerName): ?string
     {
-        return $this->configuration->get(sprintf(self::CFG_HANDLER_TYPE, mb_strtoupper($handlerName)));
+        return $this->configuration->get(sprintf(self::CFG_HANDLER_TYPE, mb_strtoupper($handlerName)), self::HANDLER_DEFAULT_TYPE);
     }
 
     /**
@@ -58,5 +59,13 @@ class MonologPluginConfiguration extends LoggerPluginConfiguration implements Mo
     public function getHandlerDefault(): string
     {
         return self::HANDLER_DEFAULT;
+    }
+
+    /**
+     * @return ApplicationConfigurationInterface
+     */
+    public function applicationConfiguration(): ApplicationConfigurationInterface
+    {
+        return $this->configuration;
     }
 }
