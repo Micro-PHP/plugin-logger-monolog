@@ -1,0 +1,23 @@
+{
+    "name": "micro/plugin-logger-monolog",
+    "description": "MIcro Framework: Implements \"micro/plugin-logger-core\" based on Monolog.",
+    "type": "library",
+    "version": "0.1",
+    "require": {
+        "monolog/monolog": "2.3.*",
+        "micro/plugin-logger-core": "0.*"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Micro\\Plugin\\Logger\\Monolog\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Stanislau.Komar",
+            "email": "stanislau_komar@epam.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
