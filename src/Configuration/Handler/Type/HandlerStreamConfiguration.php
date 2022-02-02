@@ -7,7 +7,7 @@ use Micro\Plugin\Logger\Monolog\Configuration\Handler\HandlerConfiguration;
 
 class HandlerStreamConfiguration extends HandlerConfiguration implements HandlerStreamConfigurationInterface
 {
-    protected const CFG_LOG_FILE = 'LOGGER_%s_FILE';
+    protected const CFG_LOG_FILE    = 'LOGGER_%s_FILE';
     protected const CFG_USE_LOCKING = 'LOGGER_%s_USE_LOCKING';
 
     public const LOGFILE_DEFAULT_PATH = '/var/log/micro/';

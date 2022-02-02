@@ -11,8 +11,8 @@ class HandlerResolverFactory implements HandlerResolverFactoryInterface
      * @param HandlerProviderInterface $handlerProvider
      */
     public function __construct(
-        private MonologPluginConfigurationInterface $pluginConfiguration,
-        private HandlerProviderInterface $handlerProvider
+    private MonologPluginConfigurationInterface $pluginConfiguration,
+    private HandlerProviderInterface $handlerProvider
     )
     {
     }

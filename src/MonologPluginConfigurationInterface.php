@@ -9,9 +9,9 @@ use Micro\Plugin\Logger\Monolog\Configuration\Logger\LoggerConfigurationInterfac
 
 interface MonologPluginConfigurationInterface extends LoggerPluginConfigurationInterface
 {
-    public const HANDLER_DEFAULT = 'default';
+    public const HANDLER_DEFAULT      = 'default';
     public const HANDLER_DEFAULT_TYPE = HandlerStreamConfigurationInterface::TYPE;
-    public const LOGGER_DEFAULT = 'default';
+    public const LOGGER_DEFAULT       = 'default';
 
 
     /**

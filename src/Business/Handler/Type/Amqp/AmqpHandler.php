@@ -2,7 +2,6 @@
 
 namespace Micro\Plugin\Logger\Monolog\Business\Handler\Type\Amqp;
 
-
 use Micro\Plugin\Amqp\AmqpFacadeInterface;
 use Micro\Plugin\Amqp\Business\Message\Message;
 use Micro\Plugin\Amqp\Business\Message\MessageInterface;
@@ -36,7 +35,7 @@ class AmqpHandler extends AbstractHandler
         $data = $record['formatted'];
         /** @var HandlerAmqpConfigurationInterface $configuration */
         $configuration = $this->handlerConfiguration;
-        $message = $this->createMessage($data);
+        $message       = $this->createMessage($data);
 
         $this->getAmqpFacade()->publish($message, $configuration->getPublisherName());
     }

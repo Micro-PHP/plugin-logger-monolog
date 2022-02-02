@@ -12,9 +12,9 @@ class HandlerResolver implements HandlerResolverInterface
      * @param string $loggerName
      */
     public function __construct(
-        private MonologPluginConfigurationInterface $pluginConfiguration,
-        private HandlerProviderInterface $handlerProvider,
-        private string $loggerName
+    private MonologPluginConfigurationInterface $pluginConfiguration,
+    private HandlerProviderInterface $handlerProvider,
+    private string $loggerName
     )
     {
     }

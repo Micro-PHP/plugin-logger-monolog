@@ -13,7 +13,7 @@ class LoggerFactory implements LoggerFactoryInterface
      * @param HandlerResolverFactoryInterface $handlerResolverFactory
      */
     public function __construct(
-        private HandlerResolverFactoryInterface $handlerResolverFactory
+    private HandlerResolverFactoryInterface $handlerResolverFactory
     )
     {
     }
@@ -23,7 +23,7 @@ class LoggerFactory implements LoggerFactoryInterface
      */
     public function create(string $loggerName): LoggerInterface
     {
-        $logger = new Logger($loggerName);
+        $logger                     = new Logger($loggerName);
         $handlerCollectionGenerator = $this->handlerResolverFactory
             ->create($loggerName)
             ->resolve();
