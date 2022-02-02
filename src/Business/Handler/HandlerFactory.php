@@ -12,8 +12,8 @@ class HandlerFactory implements HandlerFactoryInterface
      * @param HandlerConfigurationFactoryInterface $handlerConfigurationFactory
      */
     public function __construct(
-        private Container $container,
-        private HandlerConfigurationFactoryInterface $handlerConfigurationFactory
+    private Container $container,
+    private HandlerConfigurationFactoryInterface $handlerConfigurationFactory
     )
     {
     }
@@ -25,7 +25,7 @@ class HandlerFactory implements HandlerFactoryInterface
     public function create(string $handlerName): HandlerInterface
     {
         $handlerConfiguration = $this->handlerConfigurationFactory->create($handlerName);
-        $handlerClassName = $handlerConfiguration->getHandlerClassName();
+        $handlerClassName     = $handlerConfiguration->getHandlerClassName();
 
         return new $handlerClassName(
             $this->container,

@@ -2,13 +2,12 @@
 
 namespace Micro\Plugin\Logger\Monolog\Configuration\Handler\Type;
 
-
 use Micro\Plugin\Logger\Monolog\Business\Handler\Type\Amqp\AmqpHandler;
 use Micro\Plugin\Logger\Monolog\Configuration\Handler\HandlerConfiguration;
 
 class HandlerAmqpConfiguration extends HandlerConfiguration implements HandlerAmqpConfigurationInterface
 {
-    protected const CFG_PUBLISHER_NAME= 'LOGGER_%s_PUBLISHER';
+    protected const CFG_PUBLISHER_NAME = 'LOGGER_%s_PUBLISHER';
 
     /**
      * @return string

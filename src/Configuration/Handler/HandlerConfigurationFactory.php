@@ -11,8 +11,8 @@ class HandlerConfigurationFactory implements HandlerConfigurationFactoryInterfac
      * @param iterable $handlerConfigurationClassCollection
      */
     public function __construct(
-        private MonologPluginConfigurationInterface $pluginConfiguration,
-        private iterable $handlerConfigurationClassCollection
+    private MonologPluginConfigurationInterface $pluginConfiguration,
+    private iterable $handlerConfigurationClassCollection
     )
     {
     }
