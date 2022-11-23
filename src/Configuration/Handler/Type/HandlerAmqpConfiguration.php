@@ -14,10 +14,7 @@ class HandlerAmqpConfiguration extends HandlerConfiguration implements HandlerAm
      */
     public function getPublisherName(): string
     {
-        $publisher = $this->get(self::CFG_PUBLISHER_NAME);
-        if($publisher === null) {
-            throw new \InvalidArgumentException(sprintf('"%s" can not be null', $this->cfg(self::CFG_PUBLISHER_NAME)));
-        }
+        $publisher = $this->get(self::CFG_PUBLISHER_NAME, null, false);
 
         return $publisher;
     }

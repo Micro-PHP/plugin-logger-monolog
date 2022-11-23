@@ -1,11 +1,11 @@
 {
     "name": "micro/plugin-logger-monolog",
-    "description": "MIcro Framework: Implements \"micro/plugin-logger-core\" based on Monolog.",
+    "description": "Micro Framework: Implements \"micro/plugin-logger-core\" based on Monolog.",
     "type": "library",
-    "version": "0.1",
+    "version": "0.3",
     "require": {
         "monolog/monolog": "2.3.*",
-        "micro/plugin-logger-core": "0.*"
+        "micro/plugin-logger-core": "0.*|^1"
     },
     "license": "MIT",
     "autoload": {
