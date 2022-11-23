@@ -17,10 +17,7 @@ class HandlerStreamConfiguration extends HandlerConfiguration implements Handler
      */
     public function getLogFile(): string
     {
-        $logFile = $this->get(self::CFG_LOG_FILE, self::LOGFILE_DEFAULT_PATH);
-        if($logFile === null) {
-            $this->throwFileException('Value can not be null');
-        }
+        $logFile = $this->get(self::CFG_LOG_FILE, self::LOGFILE_DEFAULT_PATH, false);
 
         if(is_dir($logFile)) {
             return $this->getFilename($logFile);
@@ -56,25 +53,11 @@ class HandlerStreamConfiguration extends HandlerConfiguration implements Handler
     }
 
     /**
-     * @param string $message
-     * @return void
-     */
-    protected function throwFileException(string $message): void
-    {
-        throw new \RuntimeException(sprintf(
-            'Logger configuration failed: Configuration "%s": %s.',
-                $this->cfg(self::CFG_LOG_FILE),
-                $message
-            )
-        );
-    }
-
-    /**
      * @return string
      */
     public static function type(): string
     {
-        return 'stream';
+        return self::TYPE;
     }
 
     /**
