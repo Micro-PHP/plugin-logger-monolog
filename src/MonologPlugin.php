@@ -78,7 +78,7 @@ class MonologPlugin extends LoggerPlugin
     protected function createHandlerConfigurationFactory(): HandlerConfigurationFactoryInterface
     {
         return new HandlerConfigurationFactory(
-            $this->configuration,
+            $this->configuration(),
             $this->getHandlerConfigurationClassCollection()
         );
     }
@@ -87,7 +87,7 @@ class MonologPlugin extends LoggerPlugin
     protected function createHandlerResolverFactory(): HandlerResolverFactoryInterface
     {
         return new HandlerResolverFactory(
-            $this->configuration,
+            $this->configuration(),
             $this->createHandlerProvider()
         );
     }
