@@ -10,14 +10,12 @@ class HandlerStreamConfiguration extends HandlerConfiguration implements Handler
     protected const CFG_LOG_FILE    = 'LOGGER_%s_FILE';
     protected const CFG_USE_LOCKING = 'LOGGER_%s_USE_LOCKING';
 
-    public const LOGFILE_DEFAULT_PATH = '/var/log/micro/';
-
     /**
      * {@inheritDoc}
      */
     public function getLogFile(): string
     {
-        $logFile = $this->get(self::CFG_LOG_FILE, self::LOGFILE_DEFAULT_PATH, false);
+        $logFile = $this->get(self::CFG_LOG_FILE, $this->configuration->get('BASE_PATH') . '/var/log/micro/', false);
 
         if(is_dir($logFile)) {
             return $this->getFilename($logFile);
