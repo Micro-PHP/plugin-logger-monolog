@@ -1,11 +1,21 @@
 <?php
 
+/*
+ *  This file is part of the Micro framework package.
+ *
+ *  (c) Stanislau Komar <kost@micro-php.net>
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
+
 namespace Micro\Plugin\Logger\Monolog;
 
 use Micro\Framework\Kernel\Configuration\ApplicationConfigurationInterface;
 use Micro\Plugin\Logger\LoggerPluginConfiguration;
 use Micro\Plugin\Logger\Monolog\Configuration\Logger\LoggerConfiguration;
 use Micro\Plugin\Logger\Monolog\Configuration\Logger\LoggerConfigurationInterface;
+use Micro\Plugin\Logger\Monolog\Configuration\Logger\MonologPluginConfigurationInterface;
 
 class MonologPluginConfiguration extends LoggerPluginConfiguration implements MonologPluginConfigurationInterface
 {
@@ -33,12 +43,7 @@ class MonologPluginConfiguration extends LoggerPluginConfiguration implements Mo
         return $this->explodeStringToArray($loggerListSource);
     }
 
-    /**
-     * @param string $loggerConfiguration
-     *
-     * @return LoggerConfigurationInterface
-     */
-    public function getLoggerConfiguratrion(string $loggerConfiguration): LoggerConfigurationInterface
+    public function getLoggerConfiguration(string $loggerConfiguration): LoggerConfigurationInterface
     {
         return new LoggerConfiguration($this->configuration, $loggerConfiguration);
     }
@@ -61,9 +66,6 @@ class MonologPluginConfiguration extends LoggerPluginConfiguration implements Mo
         return self::HANDLER_DEFAULT;
     }
 
-    /**
-     * @return ApplicationConfigurationInterface
-     */
     public function applicationConfiguration(): ApplicationConfigurationInterface
     {
         return $this->configuration;

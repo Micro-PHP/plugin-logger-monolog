@@ -1,18 +1,31 @@
 <?php
 
+/*
+ *  This file is part of the Micro framework package.
+ *
+ *  (c) Stanislau Komar <kost@micro-php.net>
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
+
 namespace Micro\Plugin\Logger\Monolog\Business\Handler\Type\Stream;
 
 use Micro\Plugin\Logger\Monolog\Business\Handler\Type\AbstractHandler;
 use Micro\Plugin\Logger\Monolog\Configuration\Handler\Type\HandlerStreamConfigurationInterface;
 use Monolog\Handler\StreamHandler as MonologStreamHandler;
+use Monolog\LogRecord;
 
+/**
+ * @author Stanislau Komar <head.trackingsoft@gmail.com>
+ *
+ * @codeCoverageIgnore
+ */
 class StreamHandler extends AbstractHandler
 {
+    /** @psalm-suppress PropertyNotSetInConstructor */
     private MonologStreamHandler $handler;
 
-    /**
-     * @return void
-     */
     public function configure(): void
     {
         /** @var HandlerStreamConfigurationInterface $configuration */
@@ -20,19 +33,17 @@ class StreamHandler extends AbstractHandler
 
         $this->handler = new MonologStreamHandler(
             $configuration->getLogFile(),
-            $configuration->getLevel(),
+            // @phpstan-ignore-next-line
+            $this->loggerProviderTypeConfiguration
+                ->getLogLevel()
+                ->level(),
             true,
             null,
             $configuration->useLocking(),
         );
     }
 
-    /**
-     * @param array $record
-     *
-     * @return void
-     */
-    protected function write(array $record): void
+    protected function write(LogRecord $record): void
     {
         $this->handler->write($record);
     }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ *  This file is part of the Micro framework package.
+ *
+ *  (c) Stanislau Komar <kost@micro-php.net>
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
+
 namespace Micro\Plugin\Logger\Monolog\Configuration\Handler\Type;
 
 use Micro\Plugin\Logger\Monolog\Business\Handler\Type\Stream\StreamHandler;
@@ -7,7 +16,7 @@ use Micro\Plugin\Logger\Monolog\Configuration\Handler\HandlerConfiguration;
 
 class HandlerStreamConfiguration extends HandlerConfiguration implements HandlerStreamConfigurationInterface
 {
-    protected const CFG_LOG_FILE    = 'LOGGER_%s_FILE';
+    protected const CFG_LOG_FILE = 'LOGGER_%s_FILE';
     protected const CFG_USE_LOCKING = 'LOGGER_%s_USE_LOCKING';
 
     /**
@@ -15,13 +24,10 @@ class HandlerStreamConfiguration extends HandlerConfiguration implements Handler
      */
     public function getLogFile(): string
     {
-        $logFile = $this->get(self::CFG_LOG_FILE, $this->configuration->get('BASE_PATH') . '/var/log/micro/', false);
-
-        if(is_dir($logFile)) {
-            return $this->getFilename($logFile);
-        }
-
-        return $this->getFilename($logFile);
+        return $this->get(
+            self::CFG_LOG_FILE,
+            $this->configuration->get('BASE_PATH').'/var/log/micro/app.log'
+        );
     }
 
     /**
@@ -32,35 +38,11 @@ class HandlerStreamConfiguration extends HandlerConfiguration implements Handler
         return $this->get(self::CFG_USE_LOCKING, false);
     }
 
-    /**
-     * @TODO: Templates supports
-     *
-     * @param string $logFileConfigValue
-     * @return string
-     */
-    protected function getFilename(string $logFileConfigValue): string
-    {
-        $adapterLevel = $this->getLevelAsString();
-
-        return rtrim($logFileConfigValue, '/') .
-            DIRECTORY_SEPARATOR .
-            $this->configRoutingKey . '-' .
-            $adapterLevel . '-' .
-            (new \DateTime('now'))->format('Y-m-d') .
-            '.log';
-    }
-
-    /**
-     * @return string
-     */
     public static function type(): string
     {
         return self::TYPE;
     }
 
-    /**
-     * @return string
-     */
     public function getHandlerClassName(): string
     {
         return StreamHandler::class;

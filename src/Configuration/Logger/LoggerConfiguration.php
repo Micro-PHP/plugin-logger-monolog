@@ -1,9 +1,17 @@
 <?php
 
+/*
+ *  This file is part of the Micro framework package.
+ *
+ *  (c) Stanislau Komar <kost@micro-php.net>
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
+
 namespace Micro\Plugin\Logger\Monolog\Configuration\Logger;
 
 use Micro\Framework\Kernel\Configuration\PluginRoutingKeyConfiguration;
-use Micro\Plugin\Logger\Monolog\MonologPluginConfigurationInterface;
 
 class LoggerConfiguration extends PluginRoutingKeyConfiguration implements LoggerConfigurationInterface
 {
@@ -19,9 +27,6 @@ class LoggerConfiguration extends PluginRoutingKeyConfiguration implements Logge
         return $this->explodeStringToArray($handlerListSource);
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->configRoutingKey;

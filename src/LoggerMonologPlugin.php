@@ -1,8 +1,21 @@
 <?php
 
+/*
+ *  This file is part of the Micro framework package.
+ *
+ *  (c) Stanislau Komar <kost@micro-php.net>
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
+
 namespace Micro\Plugin\Logger\Monolog;
 
 use Micro\Component\DependencyInjection\Container;
+use Micro\Framework\Kernel\Plugin\ConfigurableInterface;
+use Micro\Framework\Kernel\Plugin\DependencyProviderInterface;
+use Micro\Framework\Kernel\Plugin\PluginConfigurationTrait;
+use Micro\Framework\Kernel\Plugin\PluginDependedInterface;
 use Micro\Plugin\Logger\Business\Factory\LoggerFactoryInterface;
 use Micro\Plugin\Logger\LoggerPlugin;
 use Micro\Plugin\Logger\Monolog\Business\Factory\LoggerFactory;
@@ -14,19 +27,22 @@ use Micro\Plugin\Logger\Monolog\Business\Handler\HandlerResolverFactory;
 use Micro\Plugin\Logger\Monolog\Business\Handler\HandlerResolverFactoryInterface;
 use Micro\Plugin\Logger\Monolog\Configuration\Handler\HandlerConfigurationFactory;
 use Micro\Plugin\Logger\Monolog\Configuration\Handler\HandlerConfigurationFactoryInterface;
-use Micro\Plugin\Logger\Monolog\Configuration\Handler\Type\HandlerAmqpConfiguration;
+use Micro\Plugin\Logger\Monolog\Configuration\Handler\HandlerConfigurationInterface;
 use Micro\Plugin\Logger\Monolog\Configuration\Handler\Type\HandlerStreamConfiguration;
+use Micro\Plugin\Logger\Monolog\Configuration\Logger\MonologPluginConfigurationInterface;
+use Micro\Plugin\Logger\Plugin\LoggerProviderPluginInterface;
 
-class MonologPlugin extends LoggerPlugin
+/**
+ * @author Stanislau Komar <head.trackingsoft@gmail.com>
+ *
+ * @method MonologPluginConfigurationInterface configuration()
+ */
+class LoggerMonologPlugin implements DependencyProviderInterface, PluginDependedInterface, LoggerProviderPluginInterface, ConfigurableInterface
 {
-    /**
-     * @var HandlerProviderInterface|null
-     */
+    use PluginConfigurationTrait;
+
     private ?HandlerProviderInterface $handlerProvider = null;
 
-    /**
-     * @var Container
-     */
     private Container $container;
 
     /**
@@ -35,8 +51,6 @@ class MonologPlugin extends LoggerPlugin
     public function provideDependencies(Container $container): void
     {
         $this->container = $container;
-
-        parent::provideDependencies($container);
     }
 
     /**
@@ -49,21 +63,15 @@ class MonologPlugin extends LoggerPlugin
         );
     }
 
-    /**
-     * @return HandlerProviderInterface
-     */
     protected function createHandlerProvider(): HandlerProviderInterface
     {
-        if(!$this->handlerProvider) {
+        if (!$this->handlerProvider) {
             $this->handlerProvider = new HandlerProvider($this->createHandlerFactory());
         }
 
         return $this->handlerProvider;
     }
 
-    /**
-     * @return HandlerFactoryInterface
-     */
     protected function createHandlerFactory(): HandlerFactoryInterface
     {
         return new HandlerFactory(
@@ -72,9 +80,6 @@ class MonologPlugin extends LoggerPlugin
         );
     }
 
-    /**
-     * @return HandlerConfigurationFactoryInterface
-     */
     protected function createHandlerConfigurationFactory(): HandlerConfigurationFactoryInterface
     {
         return new HandlerConfigurationFactory(
@@ -82,7 +87,6 @@ class MonologPlugin extends LoggerPlugin
             $this->getHandlerConfigurationClassCollection()
         );
     }
-
 
     protected function createHandlerResolverFactory(): HandlerResolverFactoryInterface
     {
@@ -93,13 +97,29 @@ class MonologPlugin extends LoggerPlugin
     }
 
     /**
-     * @return iterable
+     * @return iterable<class-string<HandlerConfigurationInterface>>
      */
     protected function getHandlerConfigurationClassCollection(): iterable
     {
         return [
             HandlerStreamConfiguration::class,
-            HandlerAmqpConfiguration::class
+        ];
+    }
+
+    public function getLoggerFactory(): LoggerFactoryInterface
+    {
+        return $this->createLoggerFactory();
+    }
+
+    public function getLoggerAdapterName(): string
+    {
+        return 'monolog';
+    }
+
+    public function getDependedPlugins(): iterable
+    {
+        return [
+            LoggerPlugin::class,
         ];
     }
 }

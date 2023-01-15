@@ -1,20 +1,29 @@
 <?php
 
+/*
+ *  This file is part of the Micro framework package.
+ *
+ *  (c) Stanislau Komar <kost@micro-php.net>
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
+
 namespace Micro\Plugin\Logger\Monolog\Configuration\Handler;
 
-use Micro\Plugin\Logger\Monolog\MonologPluginConfigurationInterface;
+use Micro\Plugin\Logger\Monolog\Configuration\Logger\MonologPluginConfigurationInterface;
 
-class HandlerConfigurationFactory implements HandlerConfigurationFactoryInterface
+readonly class HandlerConfigurationFactory implements HandlerConfigurationFactoryInterface
 {
     /**
-     * @param MonologPluginConfigurationInterface $pluginConfiguration
-     * @param iterable $handlerConfigurationClassCollection
+     * @template T of HandlerConfigurationInterface
+     *
+     * @psalm-param iterable<class-string<T>> $handlerConfigurationClassCollection
      */
     public function __construct(
-        private readonly MonologPluginConfigurationInterface $pluginConfiguration,
-        private readonly iterable $handlerConfigurationClassCollection
-    )
-    {
+        private MonologPluginConfigurationInterface $pluginConfiguration,
+        private iterable $handlerConfigurationClassCollection
+    ) {
     }
 
     /**
@@ -25,28 +34,22 @@ class HandlerConfigurationFactory implements HandlerConfigurationFactoryInterfac
         $handlerType = $this->pluginConfiguration->getHandlerType($handlerName);
 
         foreach ($this->handlerConfigurationClassCollection as $handlerConfigurationClass) {
-            if($handlerConfigurationClass::type() !== $handlerType) {
-                continue;
-            }
-
-            $handlerClass =  new $handlerConfigurationClass($this->pluginConfiguration->applicationConfiguration(), $handlerName);
-            if(!in_array(HandlerConfigurationInterface::class, class_implements($handlerClass), true)) {
+            if (!\in_array(HandlerConfigurationInterface::class, class_implements($handlerConfigurationClass), true)) {
                 $this->throwHandlerCreateException($handlerName, sprintf('Class "%s" should be implements "%s".',
-                    $handlerClass, HandlerConfigurationInterface::class
+                    $handlerConfigurationClass, HandlerConfigurationInterface::class
                 ));
             }
 
-            return $handlerClass;
+            if ($handlerConfigurationClass::type() !== $handlerType) {
+                continue;
+            }
+
+            return new $handlerConfigurationClass($this->pluginConfiguration->applicationConfiguration(), $handlerName);
         }
 
         throw new \RuntimeException(sprintf('Can not resolve configuration class for handler "%s"', $handlerName));
     }
 
-    /**
-     * @param string $handlerName
-     * @param string $message
-     * @return void
-     */
     protected function throwHandlerCreateException(string $handlerName, string $message): void
     {
         throw new \RuntimeException(sprintf('Logger handler "%s" create error: %s', $handlerName, $message));
