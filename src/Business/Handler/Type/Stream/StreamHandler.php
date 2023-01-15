@@ -36,7 +36,7 @@ class StreamHandler extends AbstractHandler
             // @phpstan-ignore-next-line
             $this->loggerProviderTypeConfiguration
                 ->getLogLevel()
-                ->toString(),
+                ->level(),
             true,
             null,
             $configuration->useLocking(),
