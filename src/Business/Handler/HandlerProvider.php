@@ -11,6 +11,7 @@
 
 namespace Micro\Plugin\Logger\Monolog\Business\Handler;
 
+use Micro\Plugin\Logger\Configuration\LoggerProviderTypeConfigurationInterface;
 use Monolog\Handler\HandlerInterface;
 
 class HandlerProvider implements HandlerProviderInterface
@@ -25,13 +26,10 @@ class HandlerProvider implements HandlerProviderInterface
         $this->handlerCollection = [];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getHandler(string $handlerName): HandlerInterface
+    public function getHandler(LoggerProviderTypeConfigurationInterface $loggerProviderTypeConfiguration, string $handlerName): HandlerInterface
     {
         if (!\array_key_exists($handlerName, $this->handlerCollection)) {
-            $this->handlerCollection[$handlerName] = $this->handlerFactory->create($handlerName);
+            $this->handlerCollection[$handlerName] = $this->handlerFactory->create($loggerProviderTypeConfiguration, $handlerName);
         }
 
         return $this->handlerCollection[$handlerName];

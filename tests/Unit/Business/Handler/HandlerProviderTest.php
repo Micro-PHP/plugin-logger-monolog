@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Micro\Plugin\Logger\Monolog\Test\Unit\Business\Handler;
 
+use Micro\Plugin\Logger\Configuration\LoggerProviderTypeConfigurationInterface;
 use Micro\Plugin\Logger\Monolog\Business\Handler\HandlerFactoryInterface;
 use Micro\Plugin\Logger\Monolog\Business\Handler\HandlerProvider;
 use Monolog\Handler\HandlerInterface;
@@ -22,15 +23,18 @@ class HandlerProviderTest extends TestCase
 {
     public function testGetHandler()
     {
+        $loggerProviderTypeCfg = $this->createMock(LoggerProviderTypeConfigurationInterface::class);
         $handlerFactory = $this->createMock(HandlerFactoryInterface::class);
         $handlerFactory->expects($this->once())
             ->method('create')
             ->willReturn(new TestHandlerImpl());
 
         $provider = new HandlerProvider($handlerFactory);
-        $handler = $provider->getHandler('test');
+        $handler = $provider->getHandler(
+            $loggerProviderTypeCfg,
+            'test');
 
-        $this->assertSame($handler, $provider->getHandler('test'));
+        $this->assertSame($handler, $provider->getHandler($loggerProviderTypeCfg, 'test'));
         $this->assertInstanceOf(HandlerInterface::class, $handler);
     }
 }

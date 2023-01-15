@@ -21,7 +21,7 @@
             <directory suffix=".php">src/</directory>
             <exclude>
                 <directory>src/Exception</directory>
-                <file>src/LoggerMonologPlugin.php</file>
+                <file>src/MonologPlugin.php</file>
             </exclude>
         </whitelist>
     </filter>

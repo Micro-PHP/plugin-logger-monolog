@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Micro\Plugin\Logger\Monolog\Test\Unit\Business\Handler;
 
 use Micro\Component\DependencyInjection\Container;
+use Micro\Plugin\Logger\Configuration\LoggerProviderTypeConfigurationInterface;
 use Micro\Plugin\Logger\Monolog\Business\Handler\HandlerFactory;
 use Micro\Plugin\Logger\Monolog\Configuration\Handler\HandlerConfigurationFactoryInterface;
 use Micro\Plugin\Logger\Monolog\Configuration\Handler\HandlerConfigurationInterface;
@@ -36,7 +37,9 @@ class HandlerFactoryTest extends TestCase
             ->willReturn($handlerConfig);
 
         $handlerFactory = new HandlerFactory($container, $handlerConfigurationFactory);
-        $handler = $handlerFactory->create('test');
+        $handler = $handlerFactory->create(
+            $this->createMock(LoggerProviderTypeConfigurationInterface::class),
+            'test');
 
         $this->assertInstanceOf(TestHandlerImpl::class, $handler);
     }
