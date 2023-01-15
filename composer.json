@@ -11,7 +11,7 @@
     ],
     "require": {
         "micro/kernel-boot-plugin-depended": "^1",
-        "micro/plugin-logger-core": "dev-master",
+        "micro/plugin-logger-core": "^1",
         "monolog/monolog": "^3"
     },
     "require-dev": {
