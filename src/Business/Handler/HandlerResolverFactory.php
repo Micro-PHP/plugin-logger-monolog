@@ -1,32 +1,33 @@
 <?php
 
+/*
+ *  This file is part of the Micro framework package.
+ *
+ *  (c) Stanislau Komar <kost@micro-php.net>
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
+
 namespace Micro\Plugin\Logger\Monolog\Business\Handler;
 
-use Micro\Plugin\Logger\Monolog\MonologPluginConfigurationInterface;
+use Micro\Plugin\Logger\Configuration\LoggerProviderTypeConfigurationInterface;
+use Micro\Plugin\Logger\Monolog\Configuration\Logger\MonologPluginConfigurationInterface;
 
-class HandlerResolverFactory implements HandlerResolverFactoryInterface
+readonly class HandlerResolverFactory implements HandlerResolverFactoryInterface
 {
-    /**
-     * @param MonologPluginConfigurationInterface $pluginConfiguration
-     * @param HandlerProviderInterface $handlerProvider
-     */
     public function __construct(
-    private MonologPluginConfigurationInterface $pluginConfiguration,
-    private HandlerProviderInterface $handlerProvider
-    )
-    {
+        private MonologPluginConfigurationInterface $pluginConfiguration,
+        private HandlerProviderInterface $handlerProvider
+    ) {
     }
 
-    /**
-     * @param string $loggerName
-     * @return HandlerResolverInterface
-     */
-    public function create(string $loggerName): HandlerResolverInterface
+    public function create(LoggerProviderTypeConfigurationInterface $loggerProviderTypeConfiguration): HandlerResolverInterface
     {
         return new HandlerResolver(
             $this->pluginConfiguration,
             $this->handlerProvider,
-            $loggerName
+            $loggerProviderTypeConfiguration
         );
     }
 }

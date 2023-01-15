@@ -1,30 +1,31 @@
 <?php
 
+/*
+ *  This file is part of the Micro framework package.
+ *
+ *  (c) Stanislau Komar <kost@micro-php.net>
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
+
 namespace Micro\Plugin\Logger\Monolog\Business\Handler;
 
-use Micro\Plugin\Logger\Monolog\MonologPluginConfigurationInterface;
+use Micro\Plugin\Logger\Configuration\LoggerProviderTypeConfigurationInterface;
+use Micro\Plugin\Logger\Monolog\Configuration\Logger\MonologPluginConfigurationInterface;
 
 class HandlerResolver implements HandlerResolverInterface
 {
-    /**
-     * @param MonologPluginConfigurationInterface $pluginConfiguration
-     * @param HandlerProviderInterface $handlerProvider
-     * @param string $loggerName
-     */
     public function __construct(
         private readonly MonologPluginConfigurationInterface $pluginConfiguration,
-        private readonly HandlerProviderInterface            $handlerProvider,
-        private readonly string $loggerName
-    )
-    {
+        private readonly HandlerProviderInterface $handlerProvider,
+        private readonly LoggerProviderTypeConfigurationInterface $loggerProviderTypeConfiguration
+    ) {
     }
 
-    /**
-     * @return iterable
-     */
-    public function resolve(): iterable
+    public function resolve(): \Traversable
     {
-        $loggerConfiguration = $this->pluginConfiguration->getLoggerConfiguratrion($this->loggerName);
+        $loggerConfiguration = $this->pluginConfiguration->getLoggerConfiguration($this->loggerProviderTypeConfiguration->getLoggerName());
 
         foreach ($loggerConfiguration->getHandlerList() as $handlerName) {
             yield $this->handlerProvider->getHandler($handlerName);

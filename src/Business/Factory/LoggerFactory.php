@@ -1,37 +1,39 @@
 <?php
 
+/*
+ *  This file is part of the Micro framework package.
+ *
+ *  (c) Stanislau Komar <kost@micro-php.net>
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
+
 namespace Micro\Plugin\Logger\Monolog\Business\Factory;
 
 use Micro\Plugin\Logger\Business\Factory\LoggerFactoryInterface;
+use Micro\Plugin\Logger\Configuration\LoggerProviderTypeConfigurationInterface;
 use Micro\Plugin\Logger\Monolog\Business\Handler\HandlerResolverFactoryInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
-class LoggerFactory implements LoggerFactoryInterface
+readonly class LoggerFactory implements LoggerFactoryInterface
 {
-    /**
-     * @param HandlerResolverFactoryInterface $handlerResolverFactory
-     */
     public function __construct(
-    private HandlerResolverFactoryInterface $handlerResolverFactory
-    )
-    {
+        private HandlerResolverFactoryInterface $handlerResolverFactory
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function create(string $loggerName): LoggerInterface
+    public function create(LoggerProviderTypeConfigurationInterface $loggerProviderTypeConfiguration): LoggerInterface
     {
-        $logger                     = new Logger($loggerName);
+        $logger = new Logger($loggerProviderTypeConfiguration->getLoggerName());
         $handlerCollectionGenerator = $this->handlerResolverFactory
-            ->create($loggerName)
+            ->create($loggerProviderTypeConfiguration)
             ->resolve();
-
 
         $handlerCollection = iterator_to_array($handlerCollectionGenerator);
 
-        $logger->setHandlers($handlerCollection);
+        $logger->setHandlers(array_values($handlerCollection));
 
         return $logger;
     }
