@@ -11,9 +11,10 @@
 
 namespace Micro\Plugin\Logger\Monolog\Business\Handler;
 
+use Micro\Plugin\Logger\Configuration\LoggerProviderTypeConfigurationInterface;
 use Monolog\Handler\HandlerInterface;
 
 interface HandlerProviderInterface
 {
-    public function getHandler(string $handlerName): HandlerInterface;
+    public function getHandler(LoggerProviderTypeConfigurationInterface $loggerProviderTypeConfiguration, string $handlerName): HandlerInterface;
 }

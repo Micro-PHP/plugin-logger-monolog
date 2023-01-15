@@ -18,19 +18,19 @@
 
         <UnnecessaryVarAnnotation>
             <errorLevel type="suppress">
-                <file name="src/LoggerMonologPlugin.php"/>
+                <file name="src/MonologPlugin.php"/>
             </errorLevel>
         </UnnecessaryVarAnnotation>
 
         <MissingConstructor>
             <errorLevel type="suppress">
-                <file name="src/LoggerMonologPlugin.php"/>
+                <file name="src/MonologPlugin.php"/>
             </errorLevel>
         </MissingConstructor>
 
         <ImplementedReturnTypeMismatch>
             <errorLevel type="suppress">
-                <file name="src/LoggerMonologPlugin.php"/>
+                <file name="src/MonologPlugin.php"/>
             </errorLevel>
         </ImplementedReturnTypeMismatch>
     </issueHandlers>

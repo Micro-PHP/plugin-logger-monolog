@@ -14,21 +14,22 @@ namespace Micro\Plugin\Logger\Monolog\Business\Handler;
 use Micro\Plugin\Logger\Configuration\LoggerProviderTypeConfigurationInterface;
 use Micro\Plugin\Logger\Monolog\Configuration\Logger\MonologPluginConfigurationInterface;
 
-class HandlerResolver implements HandlerResolverInterface
+readonly class HandlerResolver implements HandlerResolverInterface
 {
     public function __construct(
-        private readonly MonologPluginConfigurationInterface $pluginConfiguration,
-        private readonly HandlerProviderInterface $handlerProvider,
-        private readonly LoggerProviderTypeConfigurationInterface $loggerProviderTypeConfiguration
+        private MonologPluginConfigurationInterface $pluginConfiguration,
+        private HandlerProviderInterface $handlerProvider,
+        private LoggerProviderTypeConfigurationInterface $loggerProviderTypeConfiguration
     ) {
     }
 
     public function resolve(): \Traversable
     {
-        $loggerConfiguration = $this->pluginConfiguration->getLoggerConfiguration($this->loggerProviderTypeConfiguration->getLoggerName());
+        $loggerConfiguration = $this->pluginConfiguration
+            ->getLoggerConfiguration($this->loggerProviderTypeConfiguration->getLoggerName());
 
         foreach ($loggerConfiguration->getHandlerList() as $handlerName) {
-            yield $this->handlerProvider->getHandler($handlerName);
+            yield $this->handlerProvider->getHandler($this->loggerProviderTypeConfiguration, $handlerName);
         }
     }
 }

@@ -37,7 +37,7 @@ use Micro\Plugin\Logger\Plugin\LoggerProviderPluginInterface;
  *
  * @method MonologPluginConfigurationInterface configuration()
  */
-class LoggerMonologPlugin implements DependencyProviderInterface, PluginDependedInterface, LoggerProviderPluginInterface, ConfigurableInterface
+class MonologPlugin implements DependencyProviderInterface, PluginDependedInterface, LoggerProviderPluginInterface, ConfigurableInterface
 {
     use PluginConfigurationTrait;
 
