@@ -30,7 +30,7 @@ abstract class AbstractHandler extends AbstractProcessingHandler implements Hand
         protected readonly HandlerConfigurationInterface $handlerConfiguration,
         protected readonly LoggerProviderTypeConfigurationInterface $loggerProviderTypeConfiguration
     ) {
-        $levelName = mb_strtoupper($loggerProviderTypeConfiguration->getLogLevel()->toString());
+        $levelName = mb_strtoupper($loggerProviderTypeConfiguration->getLogLevel()->level());
 
         if (!\in_array($levelName, Level::NAMES, true)) {
             throw new \RuntimeException(sprintf('Invalid log level `%s` for the logger name `%s`.', $levelName, $this->loggerProviderTypeConfiguration->getLoggerName()));
