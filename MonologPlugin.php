@@ -9,7 +9,7 @@
  *  file that was distributed with this source code.
  */
 
-namespace Micro\Plugin\Logger\Monolog;
+namespace Micro\Plugin\LoggerMonolog;
 
 use Micro\Framework\DependencyInjection\Container;
 use Micro\Framework\BootConfiguration\Plugin\ConfigurableInterface;
@@ -45,17 +45,11 @@ class MonologPlugin implements DependencyProviderInterface, PluginDependedInterf
 
     private Container $container;
 
-    /**
-     * {@inheritDoc}
-     */
     public function provideDependencies(Container $container): void
     {
         $this->container = $container;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function createLoggerFactory(): LoggerFactoryInterface
     {
         return new LoggerFactory(

@@ -34,7 +34,7 @@ interface MonologPluginConfigurationInterface
     /**
      * @return iterable<string>
      */
-    public function getLoggerlist(): iterable;
+    public function getLoggerList(): iterable;
 
     public function applicationConfiguration(): ApplicationConfigurationInterface;
 }

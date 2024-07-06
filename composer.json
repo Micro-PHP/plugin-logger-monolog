@@ -14,9 +14,7 @@
         "micro/plugin-logger-core": "^2.0",
         "monolog/monolog": "^3"
     },
-    "require-dev": {
-        "ergebnis/composer-normalize": "^2.34"
-    },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Micro\\Plugin\\LoggerMonolog\\": "/"
@@ -26,10 +24,6 @@
         ]
     },
     "config": {
-        "allow-plugins": {
-            "ergebnis/composer-normalize": true
-        },
         "sort-packages": true
-    },
-    "minimum-stability": "dev"
+    }
 }

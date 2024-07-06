@@ -48,7 +48,7 @@ class MonologPluginConfigurationTest extends TestCase
 
     public function testGetLoggerlist()
     {
-        $this->assertEquals(['logger1', 'logger2', 'logger3'], $this->testObject->getLoggerlist());
+        $this->assertEquals(['logger1', 'logger2', 'logger3'], $this->testObject->getLoggerList());
     }
 
     public function testGetLoggerConfiguration()

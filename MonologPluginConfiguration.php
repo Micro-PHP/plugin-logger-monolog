@@ -9,7 +9,7 @@
  *  file that was distributed with this source code.
  */
 
-namespace Micro\Plugin\Logger\Monolog;
+namespace Micro\Plugin\LoggerMonolog;
 
 use Micro\Framework\BootConfiguration\Configuration\ApplicationConfigurationInterface;
 use Micro\Plugin\Logger\LoggerPluginConfiguration;
@@ -25,9 +25,6 @@ class MonologPluginConfiguration extends LoggerPluginConfiguration implements Mo
 
     protected const CFG_HANDLER_TYPE = 'LOGGER_%s_TYPE';
 
-    /**
-     * {@inheritDoc}
-     */
     public function getHandlerType(string $handlerName): ?string
     {
         return $this->configuration->get(sprintf(self::CFG_HANDLER_TYPE, mb_strtoupper($handlerName)), self::HANDLER_DEFAULT_TYPE);
@@ -36,7 +33,7 @@ class MonologPluginConfiguration extends LoggerPluginConfiguration implements Mo
     /**
      * @return iterable<string>
      */
-    public function getLoggerlist(): iterable
+    public function getLoggerList(): iterable
     {
         $loggerListSource = $this->configuration->get(self::CFG_LOGGER_LIST, self::LOGGER_DEFAULT);
 
@@ -58,9 +55,6 @@ class MonologPluginConfiguration extends LoggerPluginConfiguration implements Mo
         return $this->explodeStringToArray($handlerListSource);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getHandlerDefault(): string
     {
         return self::HANDLER_DEFAULT;

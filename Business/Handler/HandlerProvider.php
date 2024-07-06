@@ -21,8 +21,9 @@ class HandlerProvider implements HandlerProviderInterface
      */
     private array $handlerCollection;
 
-    public function __construct(private HandlerFactoryInterface $handlerFactory)
-    {
+    public function __construct(
+        private readonly HandlerFactoryInterface $handlerFactory
+    ) {
         $this->handlerCollection = [];
     }
 
